@@ -7,35 +7,33 @@ import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { SEEKER_API_URL } from "../../utils/constants";
+import { USER_API_END_POINT } from "../../utils/constants";
+import axios from "axios";
 
 const Login = () => {
-
   const [input, setInput] = useState({
     email: "",
     password: "",
     role: "",
   });
-  // const { loading,user } = useSelector(store => store.auth);
+
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
-      setInput({ ...input, [e.target.name]: e.target.value });
-  }
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    // console.log(input)
     try {
-      dispatch(setLoading(true));
-      const res = await axios.post(`${SEEKER_API_URL}/login`, input, {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true,
       });
       if (res.data.success) {
-        // dispatch(setUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);
       }
@@ -43,41 +41,7 @@ const Login = () => {
       console.log(error);
       toast.error(error.response.data.message);
     }
-    // finally {
-    //     dispatch(setLoading(false));
-    // }
   };
-  // useEffect(()=>{
-  //     if(user){
-  //         navigate("/");
-  //     }
-  // },[])
-
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
-  // const [role, setRole] = useState();
-
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const res = await axios.post(`${SEEKER_API_URL}/login`, data, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       withCredentials: true,
-  //     });
-  //     if (res.data.message) {
-  //       Toaster.success(res.data.message);
-  //       navigate("/");
-  //     } else {
-  //       Toaster.error("Login failed. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.log("There was an error!", error);
-  //     Toaster.error(error.response.data.message);
-  //   }
-  // };
 
   return (
     <div>
@@ -91,7 +55,9 @@ const Login = () => {
           <div className="my-2">
             <Label className="p-2">Email</Label>
             <Input
-              type="text"
+              type="email"
+              value={input.email}
+              name="email"
               onChange={changeEventHandler}
               placeholder="Example@abc.com"
             />
@@ -100,6 +66,8 @@ const Login = () => {
             <Label className="p-2">Password</Label>
             <Input
               type="password"
+              value={input.password}
+              name="password"
               onChange={changeEventHandler}
               placeholder="Enter password"
             />
@@ -109,6 +77,7 @@ const Login = () => {
               <Input
                 type="radio"
                 value="jobseeker"
+                name="role"
                 checked={input.role === "jobseeker"}
                 onChange={changeEventHandler}
                 className="cursor-pointer"
@@ -120,6 +89,7 @@ const Login = () => {
                 <Input
                   type="radio"
                   value="employer"
+                  name="role"
                   checked={input.role === "employer"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
