@@ -8,6 +8,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constants";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -18,7 +21,9 @@ const Signup = () => {
     role: "",
   });
 
+  const { loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -28,18 +33,21 @@ const Signup = () => {
     e.preventDefault();
     // console.log(input)
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/register`, input, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true,
       });
-      if(res.data.success){
+      if (res.data.success) {
         navigate("/login");
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -117,19 +125,18 @@ const Signup = () => {
                 <Label htmlFor="option-two">Employer</Label>
               </div>
             </RadioGroup>
-            {/* <div className="flex items-center gap-2">
-              <Label>Profile</Label>
-              <Input
-                accept="image/*"
-                type="file"
-                onChange={changeFileHandler}
-                className="cursor-pointer"
-              />
-            </div> */}
           </div>
-          <Button type="submit" value="submit" className="w-full my-4">
-            Sign Up
-          </Button>
+          {loading ? (
+            <Button className="w-full my-4">
+              {""}
+              <Loader2 className="mr-2 h-4 w-2 animate-spin" />
+             Please wait{""}
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Sign Up
+            </Button>
+          )}
           <span className="text-sm">
             Already have an account?{" "}
             <Link className="text-blue-700 " to="/login">

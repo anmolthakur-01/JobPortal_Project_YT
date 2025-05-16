@@ -35,7 +35,7 @@ const AppliedJobTable = () => {
                 <Badge>Selected</Badge>
               </TableCell>
             </TableRow>
-           ))}
+          ))}
         </TableBody>
         {/* <TableBody>
           {allAppliedJobs.length <= 0 ? (

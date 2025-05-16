@@ -13,122 +13,57 @@ import { Loader2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import { Avatar, AvatarImage } from "./ui/avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_API_END_POINT } from "@/utils/constants";
+import { setUser } from "@/redux/authSlice";
 import { toast } from "react-toastify";
-// import { Avatar, AvatarImage } from "./ui/avatar";
-// import { useDispatch, useSelector } from "react-redux";
-// import { USER_API_END_POINT } from "@/utils/constant";
-// import { setUser } from "@/redux/authSlice";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
-  // const [loading, setLoading] = useState(true);
-  // const { user } = useSelector((store) => store.auth);
-
-  // const dispatch = useDispatch();
-
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("fullname", input.fullname);
-  //   formData.append("email", input.email);
-  //   formData.append("phoneNumber", input.phoneNumber);
-  //   formData.append("bio", input.bio);
-  //   formData.append("skills", input.skills);
-  //   if (input.file) {
-  //     formData.append("file", input.file);
-  //   }
-  //   try {
-  //     setLoading(true);
-  //     const res = await axios.post(
-  //       `${USER_API_END_POINT}/profile/update`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     if (res.data.success) {
-  //       dispatch(setUser(res.data.user));
-  //       toast.success(res.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error(error.response.data.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  //   setOpen(false);
-  //   console.log(input);
-  // };
+  const [loading, setLoading] = useState(false);
+  const { user } = useSelector((store) => store.auth);
 
   const [input, setInput] = useState({
-    name: "",
-    email: "",
-    phoneNumber: "",
-    bio: "",
-    skills: "",
-    resume: "",
+    fullname: user?.fullname,
+    email: user?.email,
+    phoneNumber: user?.phoneNumber,
+    bio: user?.profile?.bio,
+    skills: user?.profile?.skills?.map((skill) => skill),
+    file: user?.profile?.resume,
   });
 
-  // const fileChangeHandler = (e) => {
-  //   const file = e.target.files?.[0];
-  //   setInput({ ...input, file });
-  // };
+  const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  let param = useParams();
-  const id = param.id;
-
-  useEffect(() => {
-    let data = {
-      _id: id,
-    };
-    axios
-      .post("http://localhost:3000/api/jobseeker/getsingle", data)
-      .then((res) => {
-        console.log(res.data);
-        setInput({
-          name: res.data.data.name,
-          email: res.data.data.email,
-          phoneNumber: res.data.data.phoneNumber,
-          bio: res.data.data.bio,
-          skills: res.data.data.skills,
-          // resume: res.data.data.resume,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  const navigate = useNavigate();
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    // console.log(input);
-    let data = new FormData();
-    data.append("name", input.name);
-    data.append("email", input.email);
-    data.append("phoneNumber", input.phoneNumber);
-    data.append("bio", input.bio);
-    data.append("skills", input.skills);
-    axios
-      .post("http://localhost:3000/api/jobseeker/update", data)
-      .then((res) => {
-        // console.log(res.data);
-        if (res.data.success) {
-          toast.success(res.data.message);
-          navigate("/profile");
-        } else {
-          toast.error(res.data.message);
+    console.log(input);
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `${USER_API_END_POINT}/update/profile`,input,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      );
+      if (res.data.success) {
+        dispatch(setUser(res.data.user));
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+    setOpen(false);
+    console.log(input);
   };
 
   return (
@@ -151,7 +86,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   id="name"
                   name="name"
                   type="text"
-                  value={input.name}
+                  value={input.fullname}
                   onChange={changeEventHandler}
                   className="col-span-3"
                 />
@@ -220,16 +155,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               </div>
             </div>
             <DialogFooter>
-              {/* {loading ? (
+              {loading ? (
                 <Button className="w-full my-4">
                   {" "}
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
                 </Button>
-              ) : ( */}
-              <Button type="submit" className="w-full my-4">
-                Update
-              </Button>
-              {/* )} */}
+              ) : (
+                <Button type="submit" className="w-full my-4">
+                  Update
+                </Button>
+              )}
             </DialogFooter>
           </form>
         </DialogContent>

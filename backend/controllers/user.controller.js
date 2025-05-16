@@ -124,7 +124,8 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file = req.file;
+    // console.log(fullname, email, phoneNumber, bio, skills);
+    // const file = req.file;
 
     // // cloudinary ayega idhar
     // const fileUri = getDataUri(file);
