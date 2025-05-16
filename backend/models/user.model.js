@@ -23,16 +23,13 @@ const userSchema = new mongoose.Schema(
       enum: ["jobseeker", "recruiter"],
       required: true,
     },
-    profile:{
-        bio:{type:String},
-        skills:[{type:String}],
-        resume:{type:String}, // URL to resume file
-        resumeOriginalName:{type:String},
-        company:{type:mongoose.Schema.Types.ObjectId, ref:'Company'},
-        profilePhoto:{
-            type:String,
-            default:""
-        }
+    profile: {
+      bio: { type: String },
+      skills: [{ type: String }],
+      resume: { type: Array, default: ["no_image.jpg"] }, // URL to resume file
+      resumeOriginalName: { type: String },
+      company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
+      profilePhoto: { type: Array, default: ["no_image.jpg"] },
     },
   },
   { timestamps: true }
