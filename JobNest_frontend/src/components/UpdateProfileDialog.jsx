@@ -44,7 +44,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     try {
       setLoading(true);
       const res = await axios.put(
-        `${USER_API_END_POINT}/update/profile`,input,
+        `${USER_API_END_POINT}/update/profile`,
+        input,
         {
           headers: {
             "Content-Type": "application/json",
@@ -70,7 +71,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     <div>
       <Dialog open={open}>
         <DialogContent
-          className="sm:max-w-[425px]"
+          className="sm:max-w-[496px]"
           onInteractOutside={() => setOpen(false)}
         >
           <DialogHeader>
@@ -149,6 +150,19 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   name="file"
                   type="file"
                   accept="application/pdf"
+                  // onChange={fileChangeHandler}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="file" className="text-right">
+                  Profile Photo
+                </Label>
+                <Input
+                  // id="file"
+                  // name="profilePhoto"
+                  type="file"
+                  accept="image/*"
                   // onChange={fileChangeHandler}
                   className="col-span-3"
                 />

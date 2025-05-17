@@ -125,7 +125,8 @@ export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     // console.log(fullname, email, phoneNumber, bio, skills, resume);
-    const resume = req.files;
+    const resume = req.files.resume;
+    const profilePhoto = req.files.profilePhoto;
 
     // // cloudinary ayega idhar
     // const fileUri = getDataUri(file);
@@ -150,7 +151,11 @@ export const updateProfile = async (req, res) => {
     if (phoneNumber) user.phoneNumber = phoneNumber;
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
-    if (resume) user.profile.resume = resume;
+    if (profilePhoto) user.profile.profilePhoto = profilePhoto;
+    if (resume) {
+      user.profile.resume = resume;
+      user.profile.resumeOriginalName = resume[0].originalname; // Save the original file name
+    }
 
     // resume comes later here...
     // if(cloudResponse){

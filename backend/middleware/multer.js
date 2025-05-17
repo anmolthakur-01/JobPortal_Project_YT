@@ -6,8 +6,8 @@ const profileStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(
       null,
-      // path.join(__dirname, "public", "assets", "forJobSeeker") // ye path ko join karta hai
-      "D:/Desktop/JobPortal_Project_YT/backend/public/assets/forJobSeeker"
+      // path.join(__dirname, "public", "assets") // ye path ko join karta hai
+      "D:/Desktop/JobPortal_Project_YT/backend/public/assets"
     );
   },
   filename: function (req, file, cb) {
@@ -17,6 +17,4 @@ const profileStorage = multer.diskStorage({
   },
 });
 
-const profileUpload = multer({ storage: profileStorage });
-
-export default profileUpload;
+export const profileUpload = multer({ storage: profileStorage });
