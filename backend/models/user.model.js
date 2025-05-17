@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      // unique: true,
+      unique: true,
     },
     phoneNumber: {
       type: Number,
@@ -24,11 +24,11 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     profile: {
-      bio: { type: String },
-      skills: [{ type: String }],
+      bio: { type: String, default: null },
+      skills: [{ type: String, default: null }],
       profilePhoto: { type: Array, default: ["no_image.jpg"] },
       resume: { type: Array, default: ["no_image.jpg"] }, // URL to resume file
-      resumeOriginalName: { type: String },
+      resumeOriginalName: { type: Array, default: null },
       company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
     },
   },

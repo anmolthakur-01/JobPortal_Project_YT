@@ -17,4 +17,6 @@ const profileStorage = multer.diskStorage({
   },
 });
 
-export const profileUpload = multer({ storage: profileStorage });
+const profileUpload = multer({ storage: profileStorage });
+
+export default profileUpload;
