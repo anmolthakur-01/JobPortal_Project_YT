@@ -50,7 +50,8 @@ const Profile = () => {
             <Avatar className="h-24 w-24">
               <AvatarImage
                 src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg"
-                alt="user profile image ayage"
+                // src={user?.profile?.profilePhoto}
+                alt="user profile photo"
               />
             </Avatar>
             <div>
@@ -93,13 +94,10 @@ const Profile = () => {
           {isResume ? (
             <a
               target="blank"
-              href="https://create.microsoft.com/en-us/templates/resumes"
-              //   {user?.profile?.resume}
-
+              href={user?.profile?.resume}
               className="text-blue-500 w-full hover:underline cursor-pointer"
             >
-              {/* {user?.profile?.resumeOriginalName} */}
-              Sahil Patel Resume
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span>NA</span>

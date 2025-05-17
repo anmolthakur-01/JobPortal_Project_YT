@@ -151,10 +151,10 @@ export const updateProfile = async (req, res) => {
     if (phoneNumber) user.phoneNumber = phoneNumber;
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
-    if (profilePhoto) user.profile.profilePhoto = profilePhoto;
+    if (profilePhoto) user.profile.profilePhoto = [profilePhoto[0].filename]; // Save the path of the uploaded file
     if (resume) {
-      user.profile.resume = resume;
-      user.profile.resumeOriginalName = resume[0].originalname; // Save the original file name
+      user.profile.resume = [resume[0].filename]; // Save the path of the uploaded file
+      user.profile.resumeOriginalName = [resume[0].originalname]; // Save the original file name
     }
 
     // resume comes later here...
