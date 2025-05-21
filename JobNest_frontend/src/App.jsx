@@ -36,6 +36,32 @@ const appRouter = createBrowserRouter([
     path: "/description/:id",
     element: <JobDescription />,
   },
+
+  // admin ke liye 
+  {
+    path:"/admin/companies",
+    element: <ProtectedRoute><Companies/></ProtectedRoute>
+  },
+  // {
+  //   path:"/admin/companies/create",
+  //   element: <ProtectedRoute><CompanyCreate/></ProtectedRoute> 
+  // },
+  // {
+  //   path:"/admin/companies/:id",
+  //   element:<ProtectedRoute><CompanySetup/></ProtectedRoute> 
+  // },
+  // {
+  //   path:"/admin/jobs",
+  //   element:<ProtectedRoute><AdminJobs/></ProtectedRoute> 
+  // },
+  // {
+  //   path:"/admin/jobs/create",
+  //   element:<ProtectedRoute><PostJob/></ProtectedRoute> 
+  // },
+  // {
+  //   path:"/admin/jobs/:id/applicants",
+  //   element:<ProtectedRoute><Applicants/></ProtectedRoute> 
+  // },
 ]);
 
 function App() {

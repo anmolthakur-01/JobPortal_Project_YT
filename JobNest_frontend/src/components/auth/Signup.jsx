@@ -117,12 +117,12 @@ const Signup = () => {
                 <Input
                   type="radio"
                   name="role"
-                  value="employer"
-                  checked={input.role === "employer"}
+                  value="recruiter"
+                  checked={input.role === "recruiter"}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label htmlFor="option-two">Employer</Label>
+                <Label htmlFor="option-two">Recruiter</Label>
               </div>
             </RadioGroup>
           </div>
