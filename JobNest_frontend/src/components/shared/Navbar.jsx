@@ -12,6 +12,24 @@ import { setUser } from "@/redux/authSlice";
 
 const Navbar = () => {
   const {user} = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
   
   return (
     <div className="bg-white">
@@ -71,10 +89,8 @@ const Navbar = () => {
                         />
                       </Avatar>
                       <div>
-                        <h4 className="font-medium">Anmol MERN</h4>
-                        <p className="text-gray-500 text-sm">
-                          Frontend Developer
-                        </p>
+                        <h4 className="font-medium">{user?.fullname}</h4>
+                        <p className="text-gray-500 text-sm">{user?.profile?.bio}</p>
                       </div>
                     </div>
                     <div className="flex flex-col text-gray-500">
@@ -86,7 +102,7 @@ const Navbar = () => {
                       </div>
                       <div className="flex w-fit items-center gap-2">
                         <LogOut />
-                        <Button className="cursor-pointer" variant="link">
+                        <Button onClick={handleLogout} className="cursor-pointer" variant="link">
                           Logout
                         </Button>
                       </div>

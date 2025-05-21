@@ -30,7 +30,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     bio: user?.profile?.bio,
     skills: user?.profile?.skills?.map((skill) => skill),
     resume: user?.profile?.resume,
-    profilePhoto: user?.profile?.profilePhoto,
+    // profilePhoto: user?.profile?.profilePhoto,
   });
 
   const dispatch = useDispatch();
@@ -59,9 +59,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     if (input.resume) {
       formData.append("resume", input.resume);
     }
-    if (input.profilePhoto) {
-      formData.append("profilePhoto", input.profilePhoto);
-    }
+    // if (input.profilePhoto) {
+    //   formData.append("profilePhoto", input.profilePhoto);
+    // }
     try {
       setLoading(true);
       const res = await axios.put(
@@ -145,6 +145,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 <Input
                   id="bio"
                   name="bio"
+                  type="text"
+                  placeholder="Tell us about yourself"
                   value={input.bio}
                   onChange={changeEventHandler}
                   className="col-span-3"
@@ -171,11 +173,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   name="resume"
                   type="file"
                   accept="application/pdf"
+                  value={input.resume}
                   onChange={fileChangeHandler}
                   className="col-span-3"
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              {/* <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="file" className="text-right">
                   Profile Photo
                 </Label>
@@ -184,10 +187,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   name="profilePhoto"
                   type="file"
                   accept="image/*"
+                  value={input.profilePhoto}
                   onChange={fileChangeHandler}
                   className="col-span-3"
                 />
-              </div>
+              </div> */}
             </div>
             <DialogFooter>
               {loading ? (
