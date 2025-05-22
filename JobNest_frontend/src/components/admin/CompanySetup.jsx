@@ -9,11 +9,11 @@ import { COMPANY_API_END_POINT } from "@/utils/constants";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-// import useGetCompanyById from '@/hooks/useGetCompanyById'
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const CompanySetup = () => {
   const params = useParams();
-    // useGetCompanyById(params.id);
+  useGetCompanyById(params.id);
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -21,7 +21,7 @@ const CompanySetup = () => {
     location: "",
     // file: null,
   });
-  const {singleCompany} = useSelector(store=>store.company);
+  const { singleCompany } = useSelector((store) => store.company);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -71,14 +71,14 @@ const CompanySetup = () => {
   };
 
   useEffect(() => {
-      setInput({
-          name: singleCompany.name || "",
-          description: singleCompany.description || "",
-          website: singleCompany.website || "",
-          location: singleCompany.location || "",
-        //   file: singleCompany.file || null
-      })
-  },[singleCompany]);
+    setInput({
+      name: singleCompany.name || "",
+      description: singleCompany.description || "",
+      website: singleCompany.website || "",
+      location: singleCompany.location || "",
+      //   file: singleCompany.file || null
+    });
+  }, [singleCompany]);
 
   return (
     <div>
@@ -145,13 +145,15 @@ const CompanySetup = () => {
             </Button>
           )}
           <Button
-            onClick={() => navigate("/admin/companies")}
+            type="button"
             variant="outline"
-            className="flex items-center gap-2 text-gray bg-cyan-300 font-semibold"
+            className="flex items-center gap-1 text-gray bg-gray-300 font-semibold"
+            onClick={() => navigate("/admin/companies")}
           >
             <ArrowLeft />
             <span>Back</span>
           </Button>
+         
         </form>
       </div>
     </div>
