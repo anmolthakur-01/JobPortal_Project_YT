@@ -47,9 +47,9 @@ const Profile = () => {
       <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
         <div className="flex justify-between">
           <div className="flex items-center gap-4">
-            <Avatar className="h-24 w-24">
+            <Avatar className="h-18 w-18">
               <AvatarImage
-                src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg"
+                src="https://cdn-icons-png.flaticon.com/512/3593/3593300.png"
                 alt="user profile photo"
               />
             </Avatar>
