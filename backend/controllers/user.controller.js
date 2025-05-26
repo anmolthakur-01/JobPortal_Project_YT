@@ -124,9 +124,9 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    // console.log(fullname, email, phoneNumber, bio, skills, resume);
-    const resume = req.files.resume;
-    const profilePhoto = req.files.profilePhoto;
+    // console.log(fullname, email, phoneNumber, bio, skills);
+    // const file = req.files; // multiple file ke liye req.files OR single ke liye req.file.filename
+    // const profilePhoto = req.files.profilePhoto;
 
     // // cloudinary ayega idhar
     // const fileUri = getDataUri(file);
@@ -151,11 +151,11 @@ export const updateProfile = async (req, res) => {
     if (phoneNumber) user.phoneNumber = phoneNumber;
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
-    if (profilePhoto) user.profile.profilePhoto = [profilePhoto[0].filename]; // Save the path of the uploaded file
-    if (resume) {
-      user.profile.resume = [resume[0].filename]; // Save the path of the uploaded file
-      user.profile.resumeOriginalName = [resume[0].originalname]; // Save the original file name
-    }
+    // if (profilePhoto) user.profile.profilePhoto = [profilePhoto[0].filename]; // Save the path of the uploaded file
+    // if (resume) {
+    //   user.profile.resume = [resume[0].filename]; // Save the path of the uploaded file
+    //   user.profile.resumeOriginalName = [resume[0].originalname]; // Save the original file name
+    // }
 
     // resume comes later here...
     // if(cloudResponse){

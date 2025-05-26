@@ -29,7 +29,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     phoneNumber: user?.phoneNumber,
     bio: user?.profile?.bio,
     skills: user?.profile?.skills?.map((skill) => skill),
-    resume: user?.profile?.resume,
+    // file: user?.profile?.resume,
     // profilePhoto: user?.profile?.profilePhoto,
   });
 
@@ -39,37 +39,34 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const fileChangeHandler = (e) => {
-    const file = e.target.files?.[0];
-    setInput({ ...input, file });
-  };
   // const fileChangeHandler = (e) => {
-  //   setInput({ ...input, [e.target.name]: e.target.files?.[0] });
+  //   const file = e.target.files?.[0];
+  //   setInput({ ...input, file });
   // };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     // console.log(input);
-    const formData = new FormData();
-    formData.append("fullname", input.fullname);
-    formData.append("email", input.email);
-    formData.append("phoneNumber", input.phoneNumber);
-    formData.append("bio", input.bio);
-    formData.append("skills", input.skills);
-    if (input.resume) {
-      formData.append("resume", input.resume);
-    }
+    // const formData = new FormData();
+    // formData.append("fullname", input.fullname);
+    // formData.append("email", input.email);
+    // formData.append("phoneNumber", input.phoneNumber);
+    // formData.append("bio", input.bio);
+    // formData.append("skills", input.skills);
+    // if (input.file) {
+    //   formData.append("file", input.file);
+    // }
     // if (input.profilePhoto) {
     //   formData.append("profilePhoto", input.profilePhoto);
     // }
     try {
       setLoading(true);
-      const res = await axios.put(
+      const res = await axios.post(
         `${USER_API_END_POINT}/update/profile`,
-        formData,
+        input,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
           withCredentials: true,
         }
@@ -164,20 +161,20 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   className="col-span-3"
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              {/* <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="file" className="text-right">
                   Resume
                 </Label>
                 <Input
-                  id="resume"
-                  name="resume"
+                  id="file"
+                  name="file"
                   type="file"
                   accept="application/pdf"
                   value={input.resume}
-                  onChange={fileChangeHandler}
+                  // onChange={fileChangeHandler}
                   className="col-span-3"
                 />
-              </div>
+              </div> */}
               {/* <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="file" className="text-right">
                   Profile Photo
